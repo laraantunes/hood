@@ -29,7 +29,13 @@ define('APP_PATH', __DIR__. DR . '..' . DR . '..' . DR . 'app' . DR);
 define('CONFIG_PATH', __DIR__. DR . '..' . DR . '..' . DR . 'config' . DR);
 
 $site_url_http = explode("/",$_SERVER['SERVER_PROTOCOL']);
-$tmp_get_site_url = trim(str_replace($_GET['get'], "", $_SERVER["REQUEST_URI"]), "/");
+
+if (empty($_GET['get'])) {
+    $tmp_get_site_url = trim($_SERVER["REQUEST_URI"], "/");
+} else {
+    $tmp_get_site_url = trim(str_replace($_GET['get'], "", $_SERVER["REQUEST_URI"]), "/");
+}
+
 $site_url = strtolower($site_url_http[0])."://".$_SERVER['SERVER_NAME'].(substr($_SERVER['SERVER_NAME'], strlen($_SERVER['SERVER_NAME']) - 1, 1) == "/" ? "" : "/").$tmp_get_site_url;
 $site_url = trim($site_url, "/")."/";
 /**
@@ -40,13 +46,13 @@ define('APP_URL', $site_url);
 
 $currentUrl = 'http';
 if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on"){
-	$pageURL .= "s";
+    $pageURL .= "s";
 }
 $currentUrl .= "://";
 if($_SERVER["SERVER_PORT"] != "80"){
-	$currentUrl .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    $currentUrl .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
 }else{
-	$currentUrl .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    $currentUrl .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 }
 /**
  * Current URL
@@ -60,15 +66,22 @@ define('CURRENT_URL', $currentUrl);
  */
 function __autoload($class)
 {
-	// Hood Classes
-	if (file_exists(HOOD_PATH . str_replace('\\', '/', $class) . '.php')) {
-		require_once (HOOD_PATH . str_replace('\\', '/', $class) . '.php');
-	// App Classes
-	} elseif (file_exists(APP_PATH . 'controllers' . str_replace('\\', '/', $class) . '.php')) {
-		require_once file_exists(APP_PATH . 'controllers' . str_replace('\\', '/', $class) . '.php');
-	} elseif (file_exists(APP_PATH . 'models' . str_replace('\\', '/', $class) . '.php')) {
-		require_once file_exists(APP_PATH . 'models' . str_replace('\\', '/', $class) . '.php');
-	}
+    // Hood Classes
+    if (file_exists(HOOD_PATH . str_replace('\\', '/', $class) . '.php')) {
+        require_once (HOOD_PATH . str_replace('\\', '/', $class) . '.php');
+    // App Classes
+    } elseif (file_exists(APP_PATH . 'controllers' . str_replace('\\', '/', $class) . '.php')) {
+        require_once file_exists(APP_PATH . 'controllers' . str_replace('\\', '/', $class) . '.php');
+    } elseif (file_exists(APP_PATH . 'models' . str_replace('\\', '/', $class) . '.php')) {
+        require_once file_exists(APP_PATH . 'models' . str_replace('\\', '/', $class) . '.php');
+    }
+}
+
+/**
+ * Include the composer autoload
+ */
+if (file_exists(HOOD_PATH . DR . 'vendor/autoload.php')) {
+    include_once HOOD_PATH . DR . 'vendor/autoload.php';
 }
 
 /**
