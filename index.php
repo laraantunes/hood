@@ -1,3 +1,3 @@
 <?php
 
-require_once 'castle'.DIRECTORY_SEPARATOR.'Hood'.DIRECTORY_SEPARATOR.'start.php';
+require_once 'hood' . DIRECTORY_SEPARATOR . 'start.php';

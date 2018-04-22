@@ -14,61 +14,63 @@ define('DR', DIRECTORY_SEPARATOR);
  * Home Project Path
  * @var string
  */
-define('HOME_PATH', __DIR__ . DR . '..' . DR . ".." . DR);
+define('HOME_PATH', __DIR__ . DR . '..' . DR);
 
 /**
  * Path for Hood Framework files
  * @var string
  */
-define('HOOD_PATH', __DIR__ . DR . '..' . DR);
+define('HOOD_PATH', __DIR__ . DR);
 
 /**
  * Path for app files
  * @var string
  */
-define('APP_PATH', __DIR__. DR . '..' . DR . '..' . DR . 'app' . DR);
+define('APP_PATH', __DIR__. DR . '..' . DR . 'app' . DR);
 
 /**
  * Path for config files
  * @var string
  */
-define('CONFIG_PATH', __DIR__. DR . '..' . DR . '..' . DR . 'config' . DR);
+define('CONFIG_PATH', __DIR__. DR . '..' . DR . 'config' . DR);
 
-$site_url_http = explode("/",$_SERVER['SERVER_PROTOCOL']);
+if (!getenv('TESTING')) {
+    $site_url_http = explode("/",$_SERVER['SERVER_PROTOCOL']);
 
-if (empty($_GET['get'])) {
-    $tmp_get_site_url = trim($_SERVER["REQUEST_URI"], "/");
-} else {
-    $tmp_get_site_url = trim(str_replace($_GET['get'], "", $_SERVER["REQUEST_URI"]), "/");
+    if (empty($_GET['get'])) {
+        $tmp_get_site_url = trim($_SERVER["REQUEST_URI"], "/");
+    } else {
+        $tmp_get_site_url = trim(str_replace($_GET['get'], "", $_SERVER["REQUEST_URI"]), "/");
+    }
+
+    $site_url = strtolower($site_url_http[0]) .
+        "://" .
+        $_SERVER['SERVER_NAME'] .
+        (substr($_SERVER['SERVER_NAME'], strlen($_SERVER['SERVER_NAME']) - 1, 1) == "/" ? "" : "/") .
+        $tmp_get_site_url;
+    $site_url = trim($site_url, "/")."/";
+    /**
+     * App's URL
+     * @var string
+     */
+    define('APP_URL', $site_url);
+
+    $currentUrl = 'http';
+    if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on"){
+        $pageURL .= "s";
+    }
+    $currentUrl .= "://";
+    if($_SERVER["SERVER_PORT"] != "80"){
+        $currentUrl .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+    }else{
+        $currentUrl .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+    }
+    /**
+     * Current URL
+     * @var string
+     */
+    define('CURRENT_URL', $currentUrl);
 }
-
-$site_url = strtolower($site_url_http[0]) .
-    "://" .
-    $_SERVER['SERVER_NAME'] .
-    (substr($_SERVER['SERVER_NAME'], strlen($_SERVER['SERVER_NAME']) - 1, 1) == "/" ? "" : "/") .
-    $tmp_get_site_url;
-$site_url = trim($site_url, "/")."/";
-/**
- * App's URL
- * @var string
- */
-define('APP_URL', $site_url);
-
-$currentUrl = 'http';
-if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on"){
-    $pageURL .= "s";
-}
-$currentUrl .= "://";
-if($_SERVER["SERVER_PORT"] != "80"){
-    $currentUrl .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-}else{
-    $currentUrl .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
-}
-/**
- * Current URL
- * @var string
- */
-define('CURRENT_URL', $currentUrl);
 
 /**
  * Autoload Function
@@ -112,7 +114,7 @@ include_once APP_PATH . 'routes.php';
 /**
  * Loads the translations
  */
-if ($_HOOD_CONFIG->app('i18n_class')) {
+if (!empty($_HOOD_CONFIG->app('i18n_class'))) {
     $i18n_class = $_HOOD_CONFIG->app('i18n_class');
     $i18n = new $i18n_class();
 } else {
@@ -120,11 +122,13 @@ if ($_HOOD_CONFIG->app('i18n_class')) {
 }
 $i18n->setCachePath(HOME_PATH . 'cache');
 $i18n->setFilePath(HOME_PATH . 'language' . DR . '{LANGUAGE}.yml');
-$i18n->setFallbackLang('pt-br');
+$i18n->setFallbackLang(!empty($_HOOD_CONFIG->app('language')) ? $_HOOD_CONFIG->app('language') : 'pt-br');
 $i18n->setMergeFallback(true);
 $i18n->init();
 
 /**
- * Executes the action
- */
-\Hood\Arrow\UrlManager::getInstance()->call();
+* Executes the action
+*/
+if (!getenv('TESTING')) {
+    \Hood\Arrow\UrlManager::getInstance()->call();
+}

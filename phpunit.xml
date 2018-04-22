@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="hood/start.php"
+         colors="true"
+         verbose="true"
+         stopOnFailure="false">
+    <testsuites>
+        <testsuite name="Controllers">
+            <directory suffix="Test.php">test/controllers/</directory>
+        </testsuite>
+        <testsuite name="Models">
+            <directory suffix="Test.php">test/models/</directory>
+        </testsuite>
+        <testsuite name="Unit">
+            <directory suffix="Test.php">test/unit/</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <env name="TESTING" value="true"/>
+    </php>
+</phpunit>

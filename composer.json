@@ -3,5 +3,8 @@
         "vlucas/phpdotenv": "*",
         "symfony/yaml": "*",
         "Philipp15b/php-i18n": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^6.4"
     }
 }
