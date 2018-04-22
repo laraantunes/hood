@@ -159,7 +159,7 @@ class UpdateBuilder
             $update .= "\n{$this->prepend}\n";
         }
 
-        $update .= "update {$this->table} set";
+        $update .= "UPDATE {$this->table} SET";
 
         $valuesString = '';
         foreach ($this->values as $key => $value) {
@@ -178,7 +178,7 @@ class UpdateBuilder
         $update .= " {$valuesString}";
 
         if (count($this->where) > 0) {
-            $whereString = ' where ';
+            $whereString = ' WHERE ';
 
             foreach ($this->where as $key => $value) {
                 if ($value === null) {
