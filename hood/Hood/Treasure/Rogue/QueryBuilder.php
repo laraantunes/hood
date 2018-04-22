@@ -105,7 +105,7 @@ class QueryBuilder{
      * @param string $type The join type (inner/left/right)
      * @return \Hood\Treasure\Rogue\QueryBuilder The current object
      */
-    public function join($table, $condition, $type=false)
+    public function join($table, $condition, $type = false)
     {
         $join = array("table" => $table,
                       "condition" => $condition,
@@ -121,7 +121,7 @@ class QueryBuilder{
      * @param string $operator Operator (and/or)
      * @return \Hood\Treasure\Rogue\QueryBuilder The current object
      */
-    public function where($condition, $operator=false)
+    public function where($condition, $operator = false)
     {
         $where = array("condition" => $condition, "operator" => $operator);
         $this->where[] = $where;
@@ -178,7 +178,7 @@ class QueryBuilder{
      * @param int $limit2 Second limit value
      * @return \Hood\Treasure\Rogue\QueryBuilder The current object
      */
-    public function setLimit($limit1, $limit2=null)
+    public function setLimit($limit1, $limit2 = null)
     {
         $this->limit = array($limit1, $limit2);
         return $this;

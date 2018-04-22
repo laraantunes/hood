@@ -34,3 +34,15 @@ Target::register('all', '/^user\/(.*)', function($params){
     echo "regex";
     var_dump($params);
 });
+
+Target::register('get', 'builder', function(){
+    echo \Hood\Treasure\Rogue\QueryBuilder::factory()->table('tabela')->field('campo');
+    echo "<br>";
+    echo \Hood\Treasure\Rogue\InsertBuilder::factory()->table('tabela')->value('campo', 10);
+    echo "<br>";
+    echo \Hood\Treasure\Rogue\UpdateBuilder::factory()->
+        table('tabela')->
+        value('campo', 10)->
+        where('campo', '?', \Hood\Treasure\Rogue\UpdateBuilder::$TYPE_BIND);
+    echo "<br>";
+});
