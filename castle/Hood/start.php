@@ -11,6 +11,12 @@
 define('DR', DIRECTORY_SEPARATOR);
 
 /**
+ * Home Project Path
+ * @var string
+ */
+define('HOME_PATH', __DIR__ . DR . '..' . DR . ".." . DR);
+
+/**
  * Path for Hood Framework files
  * @var string
  */
@@ -36,7 +42,11 @@ if (empty($_GET['get'])) {
     $tmp_get_site_url = trim(str_replace($_GET['get'], "", $_SERVER["REQUEST_URI"]), "/");
 }
 
-$site_url = strtolower($site_url_http[0])."://".$_SERVER['SERVER_NAME'].(substr($_SERVER['SERVER_NAME'], strlen($_SERVER['SERVER_NAME']) - 1, 1) == "/" ? "" : "/").$tmp_get_site_url;
+$site_url = strtolower($site_url_http[0]) .
+    "://" .
+    $_SERVER['SERVER_NAME'] .
+    (substr($_SERVER['SERVER_NAME'], strlen($_SERVER['SERVER_NAME']) - 1, 1) == "/" ? "" : "/") .
+    $tmp_get_site_url;
 $site_url = trim($site_url, "/")."/";
 /**
  * App's URL
@@ -64,30 +74,55 @@ define('CURRENT_URL', $currentUrl);
  * Autoload Function
  * @param  string $class The Classname
  */
-function __autoload($class)
+function HoodAutoload($class)
 {
     // Hood Classes
     if (file_exists(HOOD_PATH . str_replace('\\', '/', $class) . '.php')) {
         require_once (HOOD_PATH . str_replace('\\', '/', $class) . '.php');
     // App Classes
-    } elseif (file_exists(APP_PATH . 'controllers' . str_replace('\\', '/', $class) . '.php')) {
-        require_once file_exists(APP_PATH . 'controllers' . str_replace('\\', '/', $class) . '.php');
-    } elseif (file_exists(APP_PATH . 'models' . str_replace('\\', '/', $class) . '.php')) {
-        require_once file_exists(APP_PATH . 'models' . str_replace('\\', '/', $class) . '.php');
+    } elseif (file_exists(APP_PATH . 'controllers' . DR . str_replace('\\', '/', $class) . '.php')) {
+        require_once APP_PATH . 'controllers' . DR . str_replace('\\', '/', $class) . '.php';
+    } elseif (file_exists(APP_PATH . 'models' . DR . str_replace('\\', '/', $class) . '.php')) {
+        require_once APP_PATH . 'models' . DR . str_replace('\\', '/', $class) . '.php';
+    } elseif (file_exists(APP_PATH . 'misc' . DR . str_replace('\\', '/', $class) . '.php')) {
+        require_once APP_PATH . 'misc' . DR . str_replace('\\', '/', $class) . '.php';
     }
 }
+
+ini_set('unserialize_callback_func', 'spl_autoload_call');
+spl_autoload_register('HoodAutoload');
 
 /**
  * Include the composer autoload
  */
-if (file_exists(HOOD_PATH . DR . 'vendor/autoload.php')) {
-    include_once HOOD_PATH . DR . 'vendor/autoload.php';
+if (file_exists(HOME_PATH . 'vendor' . DR . 'autoload.php')) {
+    include_once HOME_PATH . 'vendor' . DR . 'autoload.php';
 }
+
+/**
+ * Loads all the configurations
+ */
+$_HOOD_CONFIG = new \Hood\Config\Config();
 
 /**
  * Include the routes
  */
-include_once CONFIG_PATH . (defined('ENV') ? ENV . DR : '') . 'routes.php';
+include_once APP_PATH . 'routes.php';
+
+/**
+ * Loads the translations
+ */
+if ($_HOOD_CONFIG->app('i18n_class')) {
+    $i18n_class = $_HOOD_CONFIG->app('i18n_class');
+    $i18n = new $i18n_class();
+} else {
+    $i18n = new Hood\Config\I18n();
+}
+$i18n->setCachePath(HOME_PATH . 'cache');
+$i18n->setFilePath(HOME_PATH . 'language' . DR . '{LANGUAGE}.yml');
+$i18n->setFallbackLang('pt-br');
+$i18n->setMergeFallback(true);
+$i18n->init();
 
 /**
  * Executes the action
