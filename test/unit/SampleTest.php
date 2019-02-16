@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use \PHPUnit\Framework\TestCase;
 use \Hood\Toolbox\Test;
 
 class SampleTest extends TestCase

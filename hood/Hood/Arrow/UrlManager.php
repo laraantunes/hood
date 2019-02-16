@@ -41,7 +41,7 @@ class UrlManager
      * Returns the current instance of UrlManager
      * @return \Hood\Arrow\UrlManager The current instance object
      */
-    public function getInstance()
+    public static function getInstance()
     {
         if (empty(static::$instance)){
             static::$instance = new self;
@@ -71,6 +71,7 @@ class UrlManager
         $this->method = $_SERVER['REQUEST_METHOD'];
     }
 
+
     /**
      * Call the route
      */
@@ -80,7 +81,7 @@ class UrlManager
         if(empty($this->routes[$this->path][$this->method])){
 
             // If the route is not generic
-            if (empty($this->routes[$this->path]['ALL'])) {
+            if (empty($this->routes[$this->path]['ANY'])) {
                 // Get the dynamic routes
                 // $dynamic = array_filter($this->routes, function($key) {
                 //     return (boolean)static::isRegex($key);
@@ -98,8 +99,8 @@ class UrlManager
 
                         if (!empty($the_route[$this->method])) {
                             $route = $the_route[$this->method];
-                        } elseif (!empty($the_route['ALL'])) {
-                            $route = $the_route['ALL'];
+                        } elseif (!empty($the_route['ANY'])) {
+                            $route = $the_route['ANY'];
                         } else {
                             throw new \Hood\Exceptions\NoRouteException;
                         }
@@ -112,7 +113,7 @@ class UrlManager
                 }
 
             } else {
-                $route = $this->routes[$this->path]['ALL'];
+                $route = $this->routes[$this->path]['ANY'];
             }
         } else {
             $route = $this->routes[$this->path][$this->method];

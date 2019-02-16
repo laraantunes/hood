@@ -2,21 +2,10 @@
 
 declare (strict_types=1);
 
-use \Hood\Arrow\Target;
+use \Hood\Target\Route;
+error_reporting(E_ALL);
 
-Target::register('get', 'teste/url', function(){
-    echo "teste";
-});
-
-Target::register('get', 'teste/bla', function(){
-    echo "teste";
-});
-
-Target::register('get', 'config/teste', function(){
-    new \Hood\Config\Config();
-});
-
-Target::register('all', '/', function(){
+Route::get('/', function(){
     echo "index";
 
     // $t = new \Hood\Treasure\Test;
@@ -25,17 +14,29 @@ Target::register('all', '/', function(){
     // }
 });
 
-Target::register('all', '/^master\/(.*)\/blaster\/(.*)', function($param1, $param2){
+Route::match('get', 'teste/url', function(){
+    echo "teste url";
+});
+
+Route::match('get', 'teste/bla', function(){
+    echo "teste";
+});
+
+Route::match('get', 'config/teste', function(){
+    s(1);
+});
+
+Route::all('/^master\/(.*)\/blaster\/(.*)', function($param1, $param2){
     echo "regex";
     var_dump($param1, $param2);
 });
 
-Target::register('all', '/^user\/(.*)', function($params){
+Route::all('/^user\/(.*)', function($params){
     echo "regex";
     var_dump($params);
 });
 
-Target::register('get', 'builder', function(){
+Route::match('get', 'builder', function(){
     echo \Hood\Treasure\Rogue\QueryBuilder::factory()->table('tabela')->field('campo');
     echo "<br>";
     echo \Hood\Treasure\Rogue\InsertBuilder::factory()->
@@ -54,3 +55,5 @@ Target::register('get', 'builder', function(){
         where('campo', '?', \Hood\Treasure\Rogue\UpdateBuilder::$TYPE_BIND);
     echo "<br>";
 });
+
+Route::resource(\Controllers\ResourceTestController::class);

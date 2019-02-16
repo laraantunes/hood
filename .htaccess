@@ -3,5 +3,7 @@ RewriteEngine on
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-l
 
-RewriteRule ^([\w\-\/+]+)$ index.php?get=$1 [L,QSA]
+#RewriteRule ^([\w\-\/+]+)$ index.php?get=$1 [L,QSA]
+RewriteRule ^(.*)$ index.php/$1
