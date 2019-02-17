@@ -32,7 +32,7 @@ function dev(): bool
  */
 function test(): bool
 {
-    return getenv(strtoupper(TESTING)) || getenv(ENVIRONMENT) == TESTING;
+    return getenv(ENVIRONMENT) == TESTING;
 }
 
 /**
@@ -42,6 +42,15 @@ function test(): bool
 function prod(): bool
 {
     return getenv(ENVIRONMENT) == PRODUCTION;
+}
+
+/**
+ * Checks if the current environment is testing
+ * @return bool
+ */
+function phpunit_test(): bool
+{
+    return getenv(strtoupper(TESTING));
 }
 
 /**
