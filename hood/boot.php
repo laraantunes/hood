@@ -55,19 +55,8 @@ include_once(HOOD_PATH . DR . 'boot' . DR . 'hood_autoload.php');
 include_once(HOOD_PATH . DR . 'helpers' . DR . 'hood_standard_helper.php');
 
 if (!phpunit_test()) {
-    $site_url_http = explode("/",$_SERVER['SERVER_PROTOCOL']);
-
-    if (empty($_GET['get'])) {
-        $tmp_get_site_url = trim($_SERVER["REQUEST_URI"], "/");
-    } else {
-        $tmp_get_site_url = trim(str_replace($_GET['get'], "", $_SERVER["REQUEST_URI"]), "/");
-    }
-
-    $site_url = strtolower($site_url_http[0]) .
-        "://" .
-        $_SERVER['SERVER_NAME'] .
-        (substr($_SERVER['SERVER_NAME'], strlen($_SERVER['SERVER_NAME']) - 1, 1) == "/" ? "" : "/") .
-        $tmp_get_site_url;
+    $site_url_http = explode("/", $_SERVER['SERVER_PROTOCOL']);
+    $site_url = strtolower($site_url_http[0]) . "://" .$_SERVER['SERVER_NAME'] .APP_URL_BASE_PATH;
     $site_url = trim($site_url, "/")."/";
 
     /**
@@ -92,3 +81,6 @@ if (!phpunit_test()) {
      */
     define('CURRENT_URL', $currentUrl);
 }
+
+// Custom Application Constants
+include_once (CONFIG_PATH . 'constants.php');

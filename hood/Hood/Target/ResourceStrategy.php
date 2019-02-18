@@ -3,7 +3,7 @@
  * 2019 Hood Framework
  */
 
-namespace Hood\Arrow;
+namespace Hood\Target;
 
 
 use Lead\Inflector\Inflector;

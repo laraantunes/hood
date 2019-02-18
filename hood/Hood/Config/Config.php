@@ -26,6 +26,10 @@ class Config
      */
     const DATABASE = 'database';
 
+    /**
+     * Type "params"
+     * @todo get the params on Config object
+     */
     const PARAMS = 'params';
 
     /**
@@ -57,7 +61,11 @@ class Config
             $this->appConfig = Yaml::parseFile(CONFIG_PATH . 'app.yml');
         }
 
-        Dotenv::create(HOME_PATH)->load();
+        $file = null;
+        if (file_exists(HOME_PATH . '.env.local')) {
+            $file = '.env.local';
+        }
+        Dotenv::create(HOME_PATH, $file)->load();
         $this->envConfig = $_ENV;
 
         if (file_exists(CONFIG_PATH . 'database.yml')) {

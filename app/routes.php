@@ -2,7 +2,10 @@
 
 declare (strict_types=1);
 
+use \cebe\markdown\MarkdownExtra;
+use \Hood\Treasure\Chest;
 use \Hood\Target\Route;
+use \Hood\Toolbox\FileManager;
 error_reporting(E_ALL);
 
 Route::get('/', function(){
@@ -12,6 +15,50 @@ Route::get('/', function(){
     // foreach ($t->teste() as $numero) {
     //     echo $numero;
     // }
+});
+
+Route::get('doc', function() {
+    $fm = new FileManager(HOME_PATH . 'docs');
+    echo "<ul>";
+    foreach ($fm->getFiles() as $file) {
+        echo "<li>";
+        echo "<a href='".APP_URL."doc/{$file}'>{$file}</a>";
+        echo "</li>";
+    }
+    echo "</ul>";
+});
+
+Route::get('doc/{file}', function($route) {
+    $fm = new FileManager(HOME_PATH . 'docs', false);
+    $parser = new MarkdownExtra();
+    $markdown = $fm->loadFile($route->params['file']);
+    echo $parser->parse($markdown);
+});
+
+Route::get('db', function(){
+//    var_dump(Chest::simpleInsert('book', ['title' => 'lalala'.rand(1,999)]));
+//    var_dump(Chest::simpleUpdate('book', ['title' => 'wololo'], ['title'], 7));
+//    var_dump(Chest::simpleDelete('book', 7));
+//    var_dump(Chest::count('book', 'lalala', 'title'));
+//    var_dump(Chest::simpleGet('book', ['title'], 1));
+//    $obj = \Models\Book::find(1);
+//    var_dump($obj);
+//    $obj->title = 'teste';
+//    dd($obj);
+//    var_dump($obj->update());
+//    $obj = \Models\Book::factory();
+//    $obj->title = 'insert'. rand(1,999);
+//    var_dump($obj->insert());
+//    $obj = \Models\Book::factory();
+//    $obj->id = 10;
+//    var_dump($obj->delete());
+//    var_dump(Chest::query("select title from book where id = ?", [1]));
+    var_dump(Chest::execute("update book set title = 'woooow' where id = ?", [1]));
+
+    if(count(Chest::getInstance()->errors) > 0) {
+        ops(Chest::getInstance()->errors[0]);
+    }
+//    var_dump(Chest::getInstance()->errors);
 });
 
 Route::match('get', 'teste/url', function(){

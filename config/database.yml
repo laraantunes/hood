@@ -1,5 +1,3 @@
 default:
-    driver:
-    host:
-    user:
-    password:
+    driver: sqlite
+    path: C:\xampp\htdocs\hood\cache\test.sqlite
