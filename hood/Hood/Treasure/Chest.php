@@ -6,9 +6,19 @@ use Hood\Config\Config;
 use Hood\Treasure\LockPick\InsertBuilder;
 use Hood\Treasure\LockPick\QueryBuilder;
 use Hood\Treasure\LockPick\UpdateBuilder;
+use Pixie\QueryBuilder\QueryBuilderHandler;
 
 class Chest
 {
+    /**
+     * @var array
+     */
+    const ALLOWED_PIXIE_DRIVERS = [
+        'mysql',
+        'pgsql',
+        'sqlite',
+    ];
+
     /**
      * @var \PDO
      */
@@ -18,6 +28,11 @@ class Chest
      * @var bool
      */
     protected $manualCommit = false;
+
+    /**
+     * @var \Pixie\QueryBuilder\QueryBuilderHandler
+     */
+    protected $queryBuilder;
 
     /**
      * Array with all the errors handled by instance
@@ -98,22 +113,22 @@ class Chest
         if (in_array($databaseConfig['driver'], ['mysql', 'pgsql']) || empty($databaseConfig['driver'])) {
             $driver = $databaseConfig['driver'] ?? 'mysql';
             // Handles host:port
-            $hosttmp = $databaseConfig['host'];
-            $hosttmp = explode('//', $hosttmp);
-            $hosttmp = implode($hosttmp);
-            $hosttmp = explode(':',$hosttmp);
-            $hostCount = count($hosttmp);
+            $hostTmp = $databaseConfig['host'];
+            $hostTmp = explode('//', $hostTmp);
+            $hostTmp = implode($hostTmp);
+            $hostTmp = explode(':',$hostTmp);
+            $hostCount = count($hostTmp);
             if($hostCount > 2){
-                $host = $hosttmp[$hostCount - 2];
-                $port = $hosttmp[$hostCount - 1];
+                $host = $hostTmp[$hostCount - 2];
+                $port = $hostTmp[$hostCount - 1];
             }else{
-                $host = $hosttmp[0];
-                $port = $hosttmp[1] ?? $databaseConfig['port'] ?? null;
+                $host = $hostTmp[0];
+                $port = $hostTmp[1] ?? $databaseConfig['port'] ?? null;
             }
-            $dsn = "{$driver}:dbname={$databaseConfig['name']};host={$host}".(!empty($port) ? ";port={$port}" : '');
+            $dsn = "{$driver}:dbname={$databaseConfig['database']};host={$host}".(!empty($port) ? ";port={$port}" : '');
         // If it's sql server
         } elseif ($databaseConfig['driver'] == 'mssql') {
-            $dsn = "dblib:host={$databaseConfig['host']};dbname={$databaseConfig['name']}";
+            $dsn = "dblib:host={$databaseConfig['host']};dbname={$databaseConfig['database']}";
         // If it's oracle
         } elseif ($databaseConfig['driver'] == 'oracle') {
             $dsn = "oci:dbname={$databaseConfig['tns']}";
@@ -131,13 +146,47 @@ class Chest
         // Starts the connection
         $this->con = new \PDO(
             $dsn,
-            $databaseConfig['user'] ?? null,
+            $databaseConfig['username'] ?? null,
             $databaseConfig['password'] ?? null,
             [\PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION]
         );
 
         // Starts the transaction
         $this->con->beginTransaction();
+
+        $this->startQueryBuilder($databaseConfig);
+    }
+
+    /**
+     * Starts the Query Builder object
+     * @param array $config
+     * @return QueryBuilderHandler|null
+     */
+    protected function startQueryBuilder(array $config): ?QueryBuilderHandler
+    {
+        try {
+            if (!in_array($config['driver'], self::ALLOWED_PIXIE_DRIVERS)) {
+                return $this->queryBuilder = null;
+            }
+
+            if ($config['driver'] == 'sqlite') {
+                $config['database'] = $config['path'];
+            }
+
+            $connection = new \Pixie\Connection($config['driver'], $config);
+            return $this->queryBuilder = new QueryBuilderHandler($connection);
+        } catch (\Exception $e) {
+            throw new \RuntimeException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * Gets the Pixie QueryBuilder object
+     * @return QueryBuilderHandler|null
+     */
+    public static function qb(): ?QueryBuilderHandler
+    {
+        return self::getInstance()->queryBuilder;
     }
 
     /**
@@ -439,9 +488,8 @@ class Chest
             $table = $instance::getTable();
             if (count($columns) == 0) {
                 $columns = array_values($instance::getFields());
-                $attributes = array_keys($instance::getFields());
             } else {
-                $attributes = $columns;
+                $columns = array_combine($columns, $columns);
             }
             $ib = InsertBuilder::factory()->table($table);
             $values = [];
@@ -449,12 +497,14 @@ class Chest
                 if (is_array($column)) {
                     $column = $column['column'];
                 }
-                $attribute = $attributes[$key];
-                $values[] = $instance->$attribute;
+                $values[] = $instance->$key;
                 $ib->value($column, "?", InsertBuilder::TYPE_BIND);
             }
             $stmt = self::getInstance()->con->prepare($ib);
             $success = $stmt->execute($values);
+
+            $keyField = $instance::getAttributeName($instance::getPrimaryKey());
+            $instance->$keyField = self::getInstance()->con->lastInsertId($instance::getPrimaryKey());
 
             $instance->afterSave();
             $instance->afterInsert();

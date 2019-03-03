@@ -15,10 +15,12 @@ class Book extends Model
         'title' => 'title',
         'rating' => 'rating',
         'price' => 'price',
+        'authorName' => 'author_name',
     ];
 
     public $id;
     public $title;
     public $rating;
     public $price;
+    public $authorName;
 }

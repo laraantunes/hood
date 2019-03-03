@@ -257,4 +257,33 @@ class Model implements \ArrayAccess
         $obj = new $class();
         return Chest::get($obj) ?? [];
     }
+
+    /**
+     * Cast a object into current model type
+     * @param array|\stdClass $original An array or an object to cast on current model object
+     * @param bool $convertDb If true, converts the database field into attribute. Default true
+     * @return self
+     */
+    public static function cast($original, $convertDb = true): self
+    {
+        $class = get_called_class();
+        $obj = new $class();
+        foreach ($original as $attr => $value) {
+            if ($convertDb) {
+                $attr = self::getAttributeName($attr);
+            }
+            $obj->$attr = $value;
+        }
+        return $obj;
+    }
+
+    /**
+     * Gets the attribute name from the database field
+     * @param $field
+     * @return string|null
+     */
+    public static function getAttributeName($field): ?string
+    {
+        return array_search($field, self::getFields());
+    }
 }

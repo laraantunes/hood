@@ -36,12 +36,24 @@ Route::get('doc/{file}', function($route) {
 });
 
 Route::get('db', function(){
-//    var_dump(Chest::simpleInsert('book', ['title' => 'lalala'.rand(1,999)]));
+    $a = Chest::qb()->table('book')->get();
+    foreach ($a as $item) {
+        $item = \Models\Book::cast($item);
+        d($item);
+    }
+//    var_dump(Chest::simpleInsert('book', ['title' => 'lalala'.rand(1,999), 'author_name' => 'blaster']));
 //    var_dump(Chest::simpleUpdate('book', ['title' => 'wololo'], ['title'], 7));
 //    var_dump(Chest::simpleDelete('book', 7));
 //    var_dump(Chest::count('book', 'lalala', 'title'));
 //    var_dump(Chest::simpleGet('book', ['title'], 1));
-//    $obj = \Models\Book::find(1);
+//    $obj = new \Models\Book();
+//    $obj->title = 'livro com autor';
+//    $obj->authorName = "Maycow";
+//    $obj->save();
+//    d($obj);
+//    $obj = \Models\Book::find(14);
+//    $obj->authorName = "Maycow Antunes";
+//    $obj->save();
 //    var_dump($obj);
 //    $obj->title = 'teste';
 //    dd($obj);
@@ -53,12 +65,12 @@ Route::get('db', function(){
 //    $obj->id = 10;
 //    var_dump($obj->delete());
 //    var_dump(Chest::query("select title from book where id = ?", [1]));
-    var_dump(Chest::execute("update book set title = 'woooow' where id = ?", [1]));
-
+//    var_dump(Chest::execute("update book set title = 'woooow' where id = ?", [1]));
+//
     if(count(Chest::getInstance()->errors) > 0) {
         ops(Chest::getInstance()->errors[0]);
     }
-//    var_dump(Chest::getInstance()->errors);
+    var_dump(Chest::getInstance()->errors);
 });
 
 Route::match('get', 'teste/url', function(){
