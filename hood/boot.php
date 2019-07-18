@@ -2,6 +2,7 @@
 /**
  * 2019 Hood Framework
  */
+use \Hood\Config\Config as Config;
 
 /**
  * Shortcut for DIRECTORY_SEPARATOR
@@ -33,10 +34,13 @@ const APP_PATH = __DIR__. DR . '..' . DR . 'app' . DR;
  */
 const CONFIG_PATH = __DIR__. DR . '..' . DR . 'config' . DR;
 
-$base_path = str_replace('hood' . DR . '..'. DR, '',
+$base_path = str_replace(
+    'hood' . DR . '..'. DR,
+    '',
     str_replace(str_replace("/", "\\", $_SERVER["DOCUMENT_ROOT"]), "", HOME_PATH)
 );
 $base_path = str_replace(DR, '/', substr($base_path, 0, strlen($base_path) -1));
+$base_path = str_replace($_SERVER["DOCUMENT_ROOT"], '', $base_path);
 
 /**
  * Application's base path
@@ -66,13 +70,13 @@ if (!phpunit_test()) {
     define('APP_URL', $site_url);
 
     $currentUrl = 'http';
-    if(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on"){
+    if (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
         $pageURL .= "s";
     }
     $currentUrl .= "://";
-    if($_SERVER["SERVER_PORT"] != "80"){
+    if ($_SERVER["SERVER_PORT"] != "80") {
         $currentUrl .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-    }else{
+    } else {
         $currentUrl .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
     }
     /**
@@ -83,4 +87,24 @@ if (!phpunit_test()) {
 }
 
 // Custom Application Constants
-include_once (CONFIG_PATH . 'constants.php');
+include_once(CONFIG_PATH . 'constants.php');
+
+/**
+ * Loads all the application configurations
+ */
+Config::start();
+
+/**
+ * Handles the development mode
+ */
+include_once(HOOD_PATH . DR . 'boot' . DR . 'development_mode.php');
+
+/**
+ * Handles the translation
+ */
+include_once(HOOD_PATH . DR . 'boot' . DR . 'translation.php');
+
+/**
+ * Includes the routes
+ */
+include_once APP_PATH . 'routes.php';
