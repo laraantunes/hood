@@ -644,12 +644,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/crysalead/storage-stream.git",
-                "reference": "8ec613b42a2dd5d7e951a118f61d6094fe97dd9b"
+                "reference": "35d986d191d883b50fd9937e6ff3821be7652120"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crysalead/storage-stream/zipball/8ec613b42a2dd5d7e951a118f61d6094fe97dd9b",
-                "reference": "8ec613b42a2dd5d7e951a118f61d6094fe97dd9b",
+                "url": "https://api.github.com/repos/crysalead/storage-stream/zipball/35d986d191d883b50fd9937e6ff3821be7652120",
+                "reference": "35d986d191d883b50fd9937e6ff3821be7652120",
                 "shasum": ""
             },
             "require": {
@@ -680,7 +680,7 @@
             "keywords": [
                 "stream"
             ],
-            "time": "2017-09-19T23:36:49+00:00"
+            "time": "2019-11-11T19:16:55+00:00"
         },
         {
             "name": "crysalead/text",
@@ -1646,7 +1646,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -1828,16 +1828,16 @@
         },
         {
             "name": "usmanhalalit/pixie",
-            "version": "2.0.0",
+            "version": "2.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/usmanhalalit/pixie.git",
-                "reference": "5820ef4f62c7be697767fd84830b7ad6fc057375"
+                "reference": "873e70e63b6802634050d9fb3d38a9bc0c5d23fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/usmanhalalit/pixie/zipball/5820ef4f62c7be697767fd84830b7ad6fc057375",
-                "reference": "5820ef4f62c7be697767fd84830b7ad6fc057375",
+                "url": "https://api.github.com/repos/usmanhalalit/pixie/zipball/873e70e63b6802634050d9fb3d38a9bc0c5d23fc",
+                "reference": "873e70e63b6802634050d9fb3d38a9bc0c5d23fc",
                 "shasum": ""
             },
             "require": {
@@ -1880,7 +1880,7 @@
                 "sql",
                 "sqlite"
             ],
-            "time": "2016-04-08T10:58:01+00:00"
+            "time": "2019-11-16T12:29:06+00:00"
         },
         {
             "name": "usmanhalalit/strana",
