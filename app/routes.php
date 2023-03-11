@@ -115,4 +115,9 @@ Route::match('get', 'builder', function(){
     echo "<br>";
 });
 
+Route::get('map', function(){
+    // https://packagist.org/packages/haydenpierce/class-finder
+    var_dump(get_declared_classes());
+});
+
 Route::resource(\Controllers\ResourceTestController::class);
