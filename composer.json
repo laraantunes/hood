@@ -8,6 +8,7 @@
             "email": "maycowantunes@gmail.com"
         }
     ],
+    "license": "GPL-3.0-or-later",
     "require": {
         "ext-pdo": "*",
         "vlucas/phpdotenv": "*",
@@ -21,7 +22,8 @@
         "usmanhalalit/strana": "*",
         "monolog/monolog": "*",
         "robmorgan/phinx": "*",
-        "deployer/deployer": "*"
+        "deployer/deployer": "*",
+        "maycow/validare": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
