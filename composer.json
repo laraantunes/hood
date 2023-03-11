@@ -1,6 +1,7 @@
 {
-    "name": "Hood",
+    "name": "maycowa/hood",
     "description": "A PHP Framework for good aim archers and agile rogues.",
+    "type": "project",
     "authors": [
         {
             "name": "Maycow Antunes",
