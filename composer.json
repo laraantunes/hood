@@ -1,5 +1,6 @@
 {
     "require": {
+        "ext-pdo": "*",
         "vlucas/phpdotenv": "*",
         "symfony/yaml": "*",
         "Philipp15b/php-i18n": "*",
@@ -7,14 +8,18 @@
         "crysalead/net": "*",
         "crysalead/inflector": "*",
         "crysalead/box": "*",
-        "glavic/params": "*"
+        "glavic/params": "*",
+        "usmanhalalit/pixie": "*",
+        "usmanhalalit/strana": "*",
+        "monolog/monolog": "*",
+        "robmorgan/phinx": "*",
+        "deployer/deployer": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.4",
+        "phpunit/phpunit": "*",
         "mockery/mockery": "*",
         "filp/whoops": "*",
         "kint-php/kint": "*",
-        "kahlan/kahlan": "*",
         "cebe/markdown": "~1.2.0"
     },
     "minimum-stability": "dev",

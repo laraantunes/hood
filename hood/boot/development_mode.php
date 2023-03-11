@@ -6,7 +6,7 @@
 /**
  * Whoops for development environment
  */
-if (dev()) {
+if (dev() && !getenv('disable_whoops')) {
     $whoops = new \Whoops\Run;
     $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
     $whoops->register();
