@@ -67,6 +67,12 @@ class UpdateBuilder
     public static $TYPE_NUMBER = 'number';
 
     /**
+     * Bind field type
+     * @var string
+     */
+    public static $TYPE_BIND = 'bind';
+
+    /**
      * Returns a new UpdateBuilder object
      */
     public static function factory() {
@@ -143,9 +149,10 @@ class UpdateBuilder
 
     /**
      * Generates the update SQL
+     * @param boolean $closeQuery If true, closes the update string with a ;
      * @return string
      */
-    public function build() {
+    public function build($closeQuery = false) {
 
         $update = '';
         if ($this->prepend != '') {
@@ -186,7 +193,7 @@ class UpdateBuilder
             if (substr($whereString, -4) == 'and ') {
                 $whereString = substr($whereString, 0, strlen($whereString) - 4);
             }
-            $update .= " {$whereString};\n";
+            $update .= " {$whereString}".($closeQuery ? ';' : '')."\n";
         } else {
             $update .= ";\n";
         }

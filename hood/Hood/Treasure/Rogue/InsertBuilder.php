@@ -126,9 +126,10 @@ class InsertBuilder
 
     /**
      *  Generates the insert SQL
+     * @param boolean $closeQuery If true, closes the insert string with a ;
      * @return string
      */
-    public function build() {
+    public function build($closeQuery = false) {
 
         $insert = '';
         if ($this->prepend != '') {
@@ -156,7 +157,7 @@ class InsertBuilder
         if (substr($valuesString, -1) == ',') {
             $valuesString = substr($valuesString, 0, strlen($valuesString) - 1);
         }
-        $insert .= "{$valuesString});\n";
+        $insert .= "{$valuesString})".($closeQuery ? ';' : '')."\n";
 
         if ($this->append != '') {
             $insert .= "\n{$this->append}\n";
