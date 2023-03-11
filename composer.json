@@ -1,4 +1,12 @@
 {
+    "name": "Hood",
+    "description": "A PHP Framework for good aim archers and agile rogues.",
+    "authors": [
+        {
+            "name": "Maycow Antunes",
+            "email": "maycowantunes@gmail.com"
+        }
+    ],
     "require": {
         "ext-pdo": "*",
         "vlucas/phpdotenv": "*",
