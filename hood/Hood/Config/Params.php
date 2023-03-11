@@ -12,22 +12,9 @@ namespace Hood\Config;
 class Params
 {
     /**
-     * @var \Glavic\Params
-     */
-    protected $paramsInstance;
-
-    /**
      * @var self
      */
     protected static $singleton;
-
-    /**
-     * Params constructor.
-     */
-    public function __construct()
-    {
-        $this->paramsInstance = \Glavic\Params::getInstance();
-    }
 
     /**
      * Gets a \Hood\Config singleton
@@ -42,44 +29,35 @@ class Params
     }
 
     /**
-     * Gets the params object
-     * @return \Glavic\Params|mixed
-     */
-    public static function params()
-    {
-        return self::singleton()->paramsInstance;
-    }
-
-    /**
      * Gets the server data with a key given
-     * @param string $key
+     * @param string|null $key
      * @return mixed
      */
-    public static function server(string $key)
+    public static function server(?string $key = null)
     {
-        return self::singleton()->paramsInstance->server[$key];
+        return $key ? $_SERVER[$key] ?? null : $_SERVER ?? [];
 
     }
 
     /**
      * Gets the get data with a key given
-     * @param string $key
+     * @param string|null $key
      * @return mixed
      */
-    public static function get(string $key)
+    public static function get(?string $key = null)
     {
-        return self::singleton()->paramsInstance->get[$key];
+        return $key ? $_GET[$key] ?? null : $_GET ?? [];
 
     }
 
     /**
      * Gets the post data with a key given
-     * @param string $key
+     * @param string|null $key
      * @return mixed
      */
-    public static function post(string $key)
+    public static function post(?string $key = null)
     {
-        return self::singleton()->paramsInstance->post[$key];
+        return $key ? $_POST[$key] ?? null : $_POST ?? [];
 
     }
 
@@ -88,9 +66,9 @@ class Params
      * @param string $key
      * @return mixed
      */
-    public static function cookie(string $key)
+    public static function cookie(?string $key = null)
     {
-        return self::singleton()->paramsInstance->cookie[$key];
+        return $key ? $_COOKIE[$key] ?? null : $_COOKIE ?? [];
 
     }
 
@@ -99,9 +77,9 @@ class Params
      * @param string $key
      * @return mixed
      */
-    public static function session(string $key)
+    public static function session(?string $key = null)
     {
-        return self::singleton()->paramsInstance->session[$key];
+        return $key ? $_SESSION[$key] ?? null : $_SESSION ?? [];
 
     }
 }
