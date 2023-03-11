@@ -1,0 +1,7 @@
+Options -Indexes
+RewriteEngine on
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^([\w\-\/+]+)$ index.php?get=$1 [L,QSA]
