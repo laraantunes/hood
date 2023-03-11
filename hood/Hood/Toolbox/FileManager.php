@@ -2,6 +2,8 @@
 /**
  * 2018 Hood Framework
  */
+
+namespace Hood\Toolbox;
 /**
  * Manager for Files and Folders
  */

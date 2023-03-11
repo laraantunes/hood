@@ -63,3 +63,12 @@ function shortClassName(string $class): string
 {
     return (new \ReflectionClass($class))->getShortName();
 }
+
+/**
+ * Dump and Die
+ * @param mixed $args
+ */
+function dd($args)
+{
+    var_dump($args); die;
+}

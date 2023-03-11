@@ -2,12 +2,12 @@
 /**
  * 2018 Hood Framework
  */
-namespace Hood\Treasure\Rogue;
+namespace Hood\Treasure\LockPick;
 
 /**
- * Generetes an update SQL
+ * Generates an update SQL
  * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
- * @package Hood\Treasure\Rogue
+ * @package Hood\Treasure\LockPick
  */
 class UpdateBuilder
 {
@@ -58,19 +58,19 @@ class UpdateBuilder
      * Text field type (string, date, etc)
      * @var string
      */
-    public static $TYPE_STRING = 'string';
+    const TYPE_STRING = 'string';
 
     /**
      * Numeric field type
      * @var string
      */
-    public static $TYPE_NUMBER = 'number';
+    const TYPE_NUMBER = 'number';
 
     /**
      * Bind field type
      * @var string
      */
-    public static $TYPE_BIND = 'bind';
+    const TYPE_BIND = 'bind';
 
     /**
      * Returns a new UpdateBuilder object
@@ -82,7 +82,7 @@ class UpdateBuilder
     /**
      * Sets the table
      * @param string $table
-     * @return \Hood\Treasure\Rogue\UpdateBuilder The current object
+     * @return \Hood\Treasure\LockPick\UpdateBuilder The current object
      */
     public function table($table) {
         $this->table = $table;
@@ -102,9 +102,9 @@ class UpdateBuilder
      * @param string $field
      * @param string $value
      * @param string type Field type, default "string"
-     * @return \Hood\Treasure\Rogue\UpdateBuilder The current object
+     * @return \Hood\Treasure\LockPick\UpdateBuilder The current object
      */
-    public function value($field, $value, $type = 'string') {
+    public function value($field, $value, $type = self::TYPE_STRING) {
         $this->values[$field] = $value;
         $this->types[$field] = $type;
         return $this;
@@ -114,9 +114,10 @@ class UpdateBuilder
      * Adds a condition
      * @param string $condition
      * @param string $value
-     * @return \Hood\Treasure\Rogue\UpdateBuilder The current object
+     * @param string $type
+     * @return \Hood\Treasure\LockPick\UpdateBuilder The current object
      */
-    public function where($condition, $value = null, $type = 'string') {
+    public function where($condition, $value = null, $type = self::TYPE_STRING) {
         $this->where[$condition] = $value;
         $this->typeWhere[$condition] = $type;
         return $this;
@@ -125,6 +126,7 @@ class UpdateBuilder
     /**
      * Returns a field's value
      * @param string $field
+     * @return mixed
      *
      */
     public function getValue($field) {
@@ -134,6 +136,7 @@ class UpdateBuilder
     /**
      * Returns a field's type
      * @param string $field
+     * @return string
      *
      */
     public function getType($field) {
@@ -207,12 +210,12 @@ class UpdateBuilder
 
     /**
      * Adds a code after build
-     * @param string|function $callback if $callback is a string,
+     * @param string|callable $callback if $callback is a string,
      * insets the text after build the update string. If it's a
      * function, executes the function passing the current object
      * as a parameter and inserts the function's return after build
      * the update string
-     * @return \Hood\Treasure\Rogue\UpdateBuilder The current object
+     * @return \Hood\Treasure\LockPick\UpdateBuilder The current object
      */
     public function appendToBuild($callback) {
         if (is_callable($callback)) {
@@ -225,12 +228,12 @@ class UpdateBuilder
 
     /**
      * Adds a code before build
-     * @param string|function $callback if $callback is a string,
+     * @param string|callable $callback if $callback is a string,
      * insets the text before build the update string. If it's a
      * function, executes the function passing the current object
      * as a parameter and inserts the function's return before build
      * the update string
-     * @return \Hood\Treasure\Rogue\UpdateBuilder The current object
+     * @return \Hood\Treasure\LockPick\UpdateBuilder The current object
      */
     public function prependToBuild($callback) {
         if (is_callable($callback)) {

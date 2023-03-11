@@ -2,12 +2,12 @@
 /**
  * 2018 Hood Framework
  */
-namespace Hood\Treasure\Rogue;
+namespace Hood\Treasure\LockPick;
 
 /**
  * Generates an insert SQL
  * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
- * @package Hood\Treasure\Rogue
+ * @package Hood\Treasure\LockPick
  */
 class InsertBuilder
 {
@@ -46,13 +46,19 @@ class InsertBuilder
      * Text field type (string, date, etc)
      * @var string
      */
-    public static $TYPE_STRING = 'string';
+    const TYPE_STRING = 'string';
 
     /**
      * Numeric field type
      * @var string
      */
-    public static $TYPE_NUMBER = 'number';
+    const TYPE_NUMBER = 'number';
+
+    /**
+     * Bind field type
+     * @var string
+     */
+    const TYPE_BIND = 'bind';
 
     /**
      * Returns a new InsertBuilder object
@@ -65,7 +71,7 @@ class InsertBuilder
     /**
      * Sets the table
      * @param string $table
-     * @return \Hood\Treasure\Rogue\InsertBuilder The current object
+     * @return \Hood\Treasure\LockPick\InsertBuilder The current object
      */
     public function table($table)
     {
@@ -87,9 +93,9 @@ class InsertBuilder
      * @param string $field
      * @param string $value
      * @param string type Field type, default "string"
-     * @return \Hood\Treasure\Rogue\InsertBuilder The current object
+     * @return \Hood\Treasure\LockPick\InsertBuilder The current object
      */
-    public function value($field, $value, $type = 'string')
+    public function value($field, $value, $type = self::TYPE_STRING)
     {
         $this->values[$field] = $value;
         $this->types[$field] = $type;
@@ -99,6 +105,7 @@ class InsertBuilder
     /**
      * Returns a field's value
      * @param string $field
+     * @return mixed
      *
      */
     public function getValue($field)
@@ -109,6 +116,7 @@ class InsertBuilder
     /**
      * Returns a field's type
      * @param string $field
+     * @return string
      *
      */
     public function getType($field)
@@ -168,12 +176,12 @@ class InsertBuilder
 
     /**
      * Adds a code after build
-     * @param string|function $callback if $callback is a string,
+     * @param string|callable $callback if $callback is a string,
      * insets the text after build the insert string. If it's a
      * function, executes the function passing the current object
      * as a parameter and inserts the function's return after build
      * the insert string
-     * @return \Hood\Treasure\Rogue\InsertBuilder The current object
+     * @return \Hood\Treasure\LockPick\InsertBuilder The current object
      */
     public function appendToBuild($callback) {
         if (is_callable($callback)) {
@@ -186,12 +194,12 @@ class InsertBuilder
 
     /**
     * Adds a code before build
-    * @param string|function $callback if $callback is a string,
+    * @param string|callable $callback if $callback is a string,
     * insets the text before build the insert string. If it's a
     * function, executes the function passing the current object
     * as a parameter and inserts the function's return before build
     * the insert string
-     * @return \Hood\Treasure\Rogue\InsertBuilder The current object
+     * @return \Hood\Treasure\LockPick\InsertBuilder The current object
      */
     public function prependToBuild($callback) {
         if (is_callable($callback)) {

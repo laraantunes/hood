@@ -14,7 +14,8 @@
         "mockery/mockery": "*",
         "filp/whoops": "*",
         "kint-php/kint": "*",
-        "kahlan/kahlan": "*"
+        "kahlan/kahlan": "*",
+        "cebe/markdown": "~1.2.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

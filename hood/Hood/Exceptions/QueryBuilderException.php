@@ -4,8 +4,8 @@
  */
 namespace Hood\Exceptions;
 /**
- * Exception for Rogue QueryBuilder
+ * Exception for LockPick QueryBuilder
  * @package Hood\Exceptions
  * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
  */
-class QueryBuilderException extends NyuException{}
+class QueryBuilderException extends \Exception {}

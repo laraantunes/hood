@@ -2,11 +2,15 @@
 /**
  * 2018 Hood Framework
  */
-namespace Hood\Treasure\Rogue;
+
+namespace Hood\Treasure\LockPick;
+
+use \Hood\Exceptions\QueryBuilderException;
+
 /**
  * Builder for SQL Queries
  * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
- * @package Hood\Treasure\Rogue
+ * @package Hood\Treasure\LockPick
  */
 class QueryBuilder{
 
@@ -68,7 +72,7 @@ class QueryBuilder{
     /**
      * Adds a field on query
      * @param string $field The field
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function field($field)
     {
@@ -79,7 +83,7 @@ class QueryBuilder{
     /**
      * Includes all the fields on query
      * @param array $fields An array with all the fields
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function fields($fields)
     {
@@ -90,7 +94,7 @@ class QueryBuilder{
     /**
      * Sets the table
      * @param string $table The table
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function table($table)
     {
@@ -102,8 +106,8 @@ class QueryBuilder{
      * Adds a join on the query
      * @param string $table The table
      * @param string $condition The join condition
-     * @param string $type The join type (inner/left/right)
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @param string|bool $type The join type (inner/left/right)
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function join($table, $condition, $type = false)
     {
@@ -118,8 +122,8 @@ class QueryBuilder{
     /**
      * Adds a condition to the query
      * @param string $condition Condition
-     * @param string $operator Operator (and/or)
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @param string|bool $operator Operator (and/or)
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function where($condition, $operator = false)
     {
@@ -131,7 +135,7 @@ class QueryBuilder{
     /**
      * Adds an order by field
      * @param string $order The field
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function orderByField($order)
     {
@@ -142,7 +146,7 @@ class QueryBuilder{
     /**
      * Adds all the order by fields
      * @param array $order the array with all the order by fields
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function orderBy($order)
     {
@@ -153,7 +157,7 @@ class QueryBuilder{
     /**
      * Adds a field to group by array
      * @param string $group The field
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function groupByField($group)
     {
@@ -164,7 +168,7 @@ class QueryBuilder{
     /**
      * sets the group by array
      * @param array $group The array with all the group by fields
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function groupBy($group)
     {
@@ -176,7 +180,7 @@ class QueryBuilder{
      * Sets the MySQL limit values
      * @param int $limit1 First limit value
      * @param int $limit2 Second limit value
-     * @return \Hood\Treasure\Rogue\QueryBuilder The current object
+     * @return \Hood\Treasure\Lockpick\QueryBuilder The current object
      */
     public function setLimit($limit1, $limit2 = null)
     {
@@ -187,6 +191,7 @@ class QueryBuilder{
     /**
      * Generates the query
      * @return string The Query generated
+     * @throws QueryBuilderException
      */
     public function build()
     {
@@ -194,7 +199,7 @@ class QueryBuilder{
 
         /* Campos */
         if(!$this->fields){
-            throw new \Hood\Exceptions\QueryBuilderException("The fields are necessary to generate the query.");
+            throw new QueryBuilderException("The fields are necessary to generate the query.");
         }else{
             $first = true;
             foreach($this->fields as $fields){
@@ -205,7 +210,7 @@ class QueryBuilder{
 
         /* Main Table */
         if(!$this->table){
-            throw new \Hood\Exceptions\QueryBuilderException("A table is necessary to generate the query.");
+            throw new QueryBuilderException("A table is necessary to generate the query.");
         }else{
             $sql .= " FROM ".$this->table." ";
         }
@@ -222,7 +227,7 @@ class QueryBuilder{
             $first = true;
             foreach($this->where as $where){
                 if(!$where['operator'] && !$first){
-                    throw new \Hood\Exceptions\QueryBuilderException(
+                    throw new QueryBuilderException(
                         "An operator for the condition '".$where['condition']."' is necessary."
                     );
                 }
@@ -255,7 +260,7 @@ class QueryBuilder{
 
         if($this->limit){
             if(!$this->limit[0]){
-                throw new \Hood\Exceptions\QueryBuilderException("An initial limit is necessary.");
+                throw new QueryBuilderException("An initial limit is necessary.");
             }else{
                 $sql .= " LIMIT ".$this->limit[0] . (($this->limit[1])?", ".$this->limit[1]:"");
             }
@@ -267,6 +272,7 @@ class QueryBuilder{
     /**
      * Build and returns the generated query
      * @return string The generated query
+     * @throws QueryBuilderException
      */
     public function __toString()
     {

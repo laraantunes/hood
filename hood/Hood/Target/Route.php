@@ -5,10 +5,13 @@
 
 namespace Hood\Target;
 
-use Hood\Arrow\ResourceStrategy;
 use Lead\Net\Http\Cgi\Request;
 use Lead\Router\Router;
 
+/**
+ * Class Route
+ * @package Hood\Target
+ */
 class Route
 {
     /**
@@ -44,7 +47,6 @@ class Route
                 'resource' => new ResourceStrategy(),
             ]]);
             static::$router->basePath(APP_URL_BASE_PATH);
-            d(static::router());
         }
         return static::$router;
     }
