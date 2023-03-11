@@ -1,5 +1,5 @@
 {
-    "name": "maycow/hood",
+    "name": "laraantunes/hood",
     "description": "A PHP Framework for good aim archers and agile rogues.",
     "type": "project",
     "authors": [
@@ -23,7 +23,7 @@
         "monolog/monolog": "*",
         "robmorgan/phinx": "*",
         "deployer/deployer": "*",
-        "maycow/validare": "*"
+        "laraantunes/validare": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
