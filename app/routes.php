@@ -2,7 +2,7 @@
 
 declare (strict_types=1);
 
-use \Hood\Arrow\Target as Target;
+use \Hood\Arrow\Target;
 
 Target::register('get', 'teste/url', function(){
     echo "teste";
@@ -10,6 +10,10 @@ Target::register('get', 'teste/url', function(){
 
 Target::register('get', 'teste/bla', function(){
     echo "teste";
+});
+
+Target::register('get', 'config/teste', function(){
+    new \Hood\Config\Config();
 });
 
 Target::register('all', '/', function(){

@@ -1,5 +1,7 @@
 {
     "require": {
-        "symfony/yaml": "*"
+        "vlucas/phpdotenv": "*",
+        "symfony/yaml": "*",
+        "Philipp15b/php-i18n": "*"
     }
 }
