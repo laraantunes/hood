@@ -1,5 +1,5 @@
 {
-    "name": "maycowa/hood",
+    "name": "maycow/hood",
     "description": "A PHP Framework for good aim archers and agile rogues.",
     "type": "project",
     "authors": [
@@ -17,7 +17,6 @@
         "crysalead/net": "*",
         "crysalead/inflector": "*",
         "crysalead/box": "*",
-        "glavic/params": "*",
         "usmanhalalit/pixie": "*",
         "usmanhalalit/strana": "*",
         "monolog/monolog": "*",
