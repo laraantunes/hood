@@ -10,4 +10,5 @@ Hood uses convention over configuration philosophy without losing PSR compatibil
 It comes with an easy to set ORM, integrated as resources with a complete routes system. Why rewrite a lot of lines of code with boring and repeated code when you can use your time and effort on business logic?
 
 # How to start a project with Hood?
-`composer install maycowa/hood` 
+`composer create-project maycowa/hood [project name]` 
+a
