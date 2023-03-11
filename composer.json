@@ -13,7 +13,7 @@
         "ext-pdo": "*",
         "vlucas/phpdotenv": "*",
         "symfony/yaml": "*",
-        "Philipp15b/php-i18n": "*",
+        "philipp15b/php-i18n": "*",
         "crysalead/router": "*",
         "crysalead/net": "*",
         "crysalead/inflector": "*",
