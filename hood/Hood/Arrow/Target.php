@@ -22,7 +22,7 @@ class Target
      * Return the routes array
      * @return array The current app routes
      */
-    public function getRoutes ()
+    public static function getRoutes ()
     {
         return static::$routes;
     }
