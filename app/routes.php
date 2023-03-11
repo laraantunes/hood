@@ -19,10 +19,10 @@ Target::register('get', 'config/teste', function(){
 Target::register('all', '/', function(){
     echo "index";
 
-    $t = new \Hood\Treasure\Test;
-    foreach ($t->teste() as $numero) {
-        echo $numero;
-    }
+    // $t = new \Hood\Treasure\Test;
+    // foreach ($t->teste() as $numero) {
+    //     echo $numero;
+    // }
 });
 
 Target::register('all', '/^master\/(.*)\/blaster\/(.*)', function($param1, $param2){
