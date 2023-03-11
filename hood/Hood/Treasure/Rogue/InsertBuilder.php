@@ -141,7 +141,7 @@ class InsertBuilder
         if (substr($fieldsString, -1) == ',') {
             $fieldsString = substr($fieldsString, 0, strlen($fieldsString) - 1);
         }
-        $insert .= "insert into {$this->table} ({$fieldsString}) values (";
+        $insert .= "INSERT INTO {$this->table} ({$fieldsString}) VALUES (";
 
         $valuesString = '';
         foreach ($this->values as $key => $value) {
