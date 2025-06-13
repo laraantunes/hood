@@ -6,6 +6,6 @@ namespace Hood\Exceptions;
 /**
  * Exception for LockPick QueryBuilder
  * @package Hood\Exceptions
- * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
+ * @author Lara Antunes <eularaantunes@gmail.com>
  */
 class QueryBuilderException extends \Exception {}

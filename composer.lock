@@ -863,16 +863,16 @@
         },
         {
             "name": "laraantunes/validare",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laraantunes/validare.git",
-                "reference": "7b7fdc6a8294f63821c7d0debf8429952bbdb57b"
+                "reference": "1e817cf54609e00dea1bfada19c164d5df846c6b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laraantunes/validare/zipball/7b7fdc6a8294f63821c7d0debf8429952bbdb57b",
-                "reference": "7b7fdc6a8294f63821c7d0debf8429952bbdb57b",
+                "url": "https://api.github.com/repos/laraantunes/validare/zipball/1e817cf54609e00dea1bfada19c164d5df846c6b",
+                "reference": "1e817cf54609e00dea1bfada19c164d5df846c6b",
                 "shasum": ""
             },
             "require-dev": {
@@ -890,16 +890,16 @@
             ],
             "authors": [
                 {
-                    "name": "Maycow Antunes",
-                    "email": "maycowantunes@gmail.com"
+                    "name": "Lara Antunes",
+                    "email": "eularaantunes@gmail.com"
                 }
             ],
             "description": "A simple-to-use validation library.",
             "support": {
                 "issues": "https://github.com/laraantunes/validare/issues",
-                "source": "https://github.com/laraantunes/validare/tree/1.0.1"
+                "source": "https://github.com/laraantunes/validare/tree/1.0.2"
             },
-            "time": "2019-04-09T00:30:12+00:00"
+            "time": "2023-03-11T01:02:41+00:00"
         },
         {
             "name": "league/container",

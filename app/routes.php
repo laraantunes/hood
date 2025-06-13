@@ -48,11 +48,11 @@ Route::get('db', function(){
 //    var_dump(Chest::simpleGet('book', ['title'], 1));
 //    $obj = new \Models\Book();
 //    $obj->title = 'livro com autor';
-//    $obj->authorName = "Maycow";
+//    $obj->authorName = "Lara";
 //    $obj->save();
 //    d($obj);
 //    $obj = \Models\Book::find(14);
-//    $obj->authorName = "Maycow Antunes";
+//    $obj->authorName = "Lara Antunes";
 //    $obj->save();
 //    var_dump($obj);
 //    $obj->title = 'teste';

@@ -6,7 +6,7 @@ namespace Hood\Exceptions;
 /**
  * Routing Exception
  * @package Hood\Exceptions
- * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
+ * @author Lara Antunes <eularaantunes@gmail.com>
  */
 class NoRouteException extends \Exception
 {

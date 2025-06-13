@@ -1,6 +1,6 @@
 <?php
 /**
- * 2019 Hood Framework
+ * 2025 Hood Framework
  */
 
 use \Hood\Config\Config as Config;

@@ -9,7 +9,7 @@ use \Hood\Exceptions\QueryBuilderException;
 
 /**
  * Builder for SQL Queries
- * @author Maycow Alexandre Antunes <maycow@maycow.com.br>
+ * @author Lara Antunes <eularaantunes@gmail.com>
  * @package Hood\Treasure\LockPick
  */
 class QueryBuilder{
