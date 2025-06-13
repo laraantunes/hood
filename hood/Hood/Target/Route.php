@@ -154,6 +154,17 @@ class Route
     }
 
     /**
+     * Redirects to the provided path
+     * @param string $path Path to redirect
+     */
+    public static function redirect(string $path)
+    {
+        $root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
+            "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        header("Location: {$root}/{$path}");
+    }
+
+    /**
      * Handle for "/" pattern
      * @param string $pattern
      * @return string
