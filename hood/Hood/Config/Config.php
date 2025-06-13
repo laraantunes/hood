@@ -65,7 +65,7 @@ class Config
         if (file_exists(HOME_PATH . '.env.local')) {
             $file = '.env.local';
         }
-        Dotenv::create(HOME_PATH, $file)->load();
+        Dotenv::createMutable(HOME_PATH, $file)->safeLoad();
         $this->envConfig = $_ENV;
 
         if (file_exists(CONFIG_PATH . 'database.yml')) {
