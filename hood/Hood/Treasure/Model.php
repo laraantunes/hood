@@ -200,7 +200,7 @@ class Model implements \ArrayAccess
     {
         $primaryKey = self::getPrimaryKey();
         $count = Chest::count($this::getTable(), $this->$primaryKey);
-        if ($count == 1) {
+        if (!empty($this->$primaryKey) && $count == 1) {
             return $this->update();
         }
         return $this->insert();
