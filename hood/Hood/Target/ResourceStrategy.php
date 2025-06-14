@@ -28,6 +28,10 @@ class ResourceStrategy
             return $controller->index($route->request, $route->params, $route->response, $route);
         });
 
+        $router->get($options['resourceName'] . '/new', function($route) use ($controller) {
+            return $controller->new($route->request, $route->params, $route->response, $route);
+        });
+
         $router->get($options['resourceName'] . '/{id}', function($route) use ($controller) {
             return $controller->show($route->params['id'], $route->request, $route->params, $route->response, $route);
         });
