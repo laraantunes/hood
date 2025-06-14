@@ -145,7 +145,7 @@ class InsertBuilder
         }
 
         $fields = array_keys($this->values);
-        $fieldsString = implode($fields, ',');
+        $fieldsString = implode(',', $fields);
         if (substr($fieldsString, -1) == ',') {
             $fieldsString = substr($fieldsString, 0, strlen($fieldsString) - 1);
         }
