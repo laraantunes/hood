@@ -40,8 +40,8 @@ class ResourceStrategy
             return $controller->edit($route->params['id'], $route->request, $route->params, $route->response, $route);
         });
 
-        $router->post($options['resourceName'] . '/{id}/create', function($route) use ($controller) {
-            return $controller->create($route->params['id'], $route->request, $route->params, $route->response, $route);
+        $router->post($options['resourceName'] . '/create', function($route) use ($controller) {
+            return $controller->create($route->request, $route->params, $route->response, $route);
         });
 
         $router->post($options['resourceName'] . '/{id}/update', function($route) use ($controller) {
