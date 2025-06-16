@@ -484,10 +484,12 @@ class Chest
         try {
             $instance->beforeSave();
             $instance->beforeInsert();
+            $fields = $instance::getFields();
+            $attributes = array_flip($fields);
 
             $table = $instance::getTable();
             if (count($columns) == 0) {
-                $columns = array_values($instance::getFields());
+                $columns = array_values($fields);
             } else {
                 $columns = array_combine($columns, $columns);
             }
@@ -497,7 +499,8 @@ class Chest
                 if (is_array($column)) {
                     $column = $column['column'];
                 }
-                $values[] = $instance->$key;
+                $realKey = $attributes[$key];
+                $values[] = $instance->$realKey;
                 $ib->value($column, "?", InsertBuilder::TYPE_BIND);
             }
             $stmt = self::getInstance()->con->prepare($ib);
