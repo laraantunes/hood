@@ -161,7 +161,7 @@ class Route
     {
         $root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
             "://" . $_SERVER['HTTP_HOST'] . APP_URL_BASE_PATH;
-        header("Location: {$root}{$path}");
+        header("Location: {$root}/{$path}");
     }
 
     /**
