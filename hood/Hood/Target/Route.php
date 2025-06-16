@@ -160,7 +160,7 @@ class Route
     public static function redirect(string $path)
     {
         $root = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") .
-            "://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+            "://" . $_SERVER['HTTP_HOST'] . APP_URL_BASE_PATH;
         header("Location: {$root}{$path}");
     }
 
